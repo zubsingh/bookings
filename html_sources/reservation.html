@@ -5,6 +5,10 @@
     <title>Reservation</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs5.min.css">
+    <!--    <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .my-footer {
             height: 5em;
@@ -13,6 +17,10 @@
             padding: 1em;
             color: #ffffff;
             font-size: 20px;
+        }
+
+        .redText {
+            color: red;
         }
     </style>
 </head>
@@ -63,29 +71,52 @@
         <div class="col col-md-6">
             <h1>Search for Availability</h1>
 
-            <form action="./reservation.html" method="get">
-                <div class="form-col">
+            <form action="./reservation.html" method="get" novalidate class="needs-validation">
+                <!--                <div class="form-col">-->
 
-                    <div class="mb-3">
-                        <label for="start_date" class="form-label">Starting Date</label>
-                        <input required type="date" class="form-control" id="start_date" name="start_date"
-                               aria-describedby="start date help">
-                        <div id="stateDateHelp" class="form-text">Enter your starting date in the form of YYYY-MM-DD
+                <!--                    <div class="mb-3">-->
+                <!--                        <label for="start_date" class="form-label">Starting Date</label>-->
+                <!--                        <input required type="date" class="form-control" id="start_date" name="start_date"-->
+                <!--                               aria-describedby="start date help">-->
+                <!--                        <div id="stateDateHelp" class="form-text">Enter your starting date in the form of YYYY-MM-DD-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+
+                <!--                    <div class="mb-3">-->
+                <!--                        <label for="end_date" class="form-label">Ending Date</label>-->
+                <!--                        <input required type="date" class="form-control" id="end_date" name="end_date"-->
+                <!--                               aria-describedby="End date help">-->
+                <!--                        <div id="endDataHelp" class="form-text">Enter your ending date in the form of YYYY-MM-DD</div>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-row" id="reservation-dates">
+                            <div class="col">
+                                <input required type="text" class="form-control" name="start" placeholder="Arrival">
+                            </div>
+                            <br>
+                            <div class="col">
+                                <input required type="text" class="form-control" name="end" placeholder="Departure">
+                            </div>
                         </div>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="end_date" class="form-label">Ending Date</label>
-                        <input required type="date" class="form-control" id="end_date" name="end_date"
-                               aria-describedby="End date help">
-                        <div id="endDataHelp" class="form-text">Enter your ending date in the form of YYYY-MM-DD</div>
-                    </div>
-
                 </div>
+                <hr>
                 <button type="submit" class="btn btn-primary">Search Availability</button>
             </form>
         </div>
 
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <p id="myparagraph">This is some text</p>
+            <p>
+                <button id="colorButton" class="btn btn-outline-secondary">Click Me</button>
+            </p>
+        </div>
     </div>
 </div>
 
@@ -107,5 +138,63 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+<script>
+    console.log("This is javascrpt page");
+
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        let forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })();
+
+    const elem = document.getElementById('reservation-dates');
+    const rangepicker = new DateRangePicker(elem, {
+        format: "yyyy-mm-dd",
+    });
+
+    document.getElementById("colorButton").addEventListener("click", function () {
+        // let myel = document.getElementById("myparagraph");
+        // if (myel.classList.contains("redText")) {
+        //     myel.classList.remove("redText");
+        // } else {
+        //     myel.classList.add("redText");
+        // }
+        //notify("This is my message", "success");
+        notifyModel('title', "Hello World", 'success', "My text for the button");
+    });
+
+    // function notify(msg, msgType) {
+    //     notie.alert({
+    //         type: msgType,
+    //         text: msg,
+    //     })
+    // }
+
+    function notifyModel(title, text, icon, confirmButtom) {
+        Swal.fire({
+            title: title,
+            html: text,
+            icon: icon,
+            confirmButtonText: confirmButtom
+        })
+    }
+</script>
+<script src="https://unpkg.com/notie"></script>
 </body>
 </html>
