@@ -9,20 +9,7 @@
           href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs5.min.css">
     <!--    <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .my-footer {
-            height: 5em;
-            background-color: #364bbe;
-            margin-top: 1.5em;
-            padding: 1em;
-            color: #ffffff;
-            font-size: 20px;
-        }
-
-        .redText {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="static/css/styles.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -140,8 +127,7 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
 <script>
-    console.log("This is javascrpt page");
-
+    let attention = Prompt();
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
         'use strict'
@@ -169,6 +155,22 @@
     });
 
     document.getElementById("colorButton").addEventListener("click", function () {
+        let html = `
+        <form id="check-availability-form action="" method="post" novalidate class="needs-validation>
+            <div class="from-row">
+            <div class="col">
+            <div class="form-row" id="reservation-dates-modal">
+            <div class = "col">
+            <input disabled required class="form-control" type="text" name="start" id="start" placeholder="Arrival">
+</div>
+            <div class="col">
+            <input disabled required class="form-control" type="text" name="end" id="end" placeholder="Departure">
+</div>
+</div>
+</div>
+</div>
+         `
+
         // let myel = document.getElementById("myparagraph");
         // if (myel.classList.contains("redText")) {
         //     myel.classList.remove("redText");
@@ -176,7 +178,10 @@
         //     myel.classList.add("redText");
         // }
         //notify("This is my message", "success");
-        notifyModel('title', "Hello World", 'success', "My text for the button");
+        //notifyModel('title', "Hello World", 'success', "My text for the button");
+        //attention.toast({msg: "Hello World", icon: "error"});
+        //attention.success({msg: "Hello World"});
+        attention.custom({msg: html, title: "Choose your Dates"});
     });
 
     // function notify(msg, msgType) {
@@ -193,6 +198,113 @@
             icon: icon,
             confirmButtonText: confirmButtom
         })
+    }
+
+    function Prompt() {
+        let toast = function (c) {
+            const {
+                msg = "",
+                icon = "success",
+                position = "top-end",
+            } = c;
+
+            //console.log("click buttion and got roast");
+            const Toast = Swal.mixin({
+                toast: true,
+                title: msg,
+                position: position,
+                icon: icon,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                // icon: 'success',
+                // title: 'Signed in successfully'
+            })
+        }
+        let success = function (c) {
+            //console.log("clicked button and got sucess");
+            const {
+                msg = "",
+                title = "",
+                footer = "",
+            } = c;
+
+            Swal.fire({
+                icon: 'success',
+                title: title,
+                text: msg,
+                footer: footer,
+            })
+
+        }
+
+        let error = function (c) {
+            //console.log("clicked button and got sucess");
+            const {
+                msg = "",
+                title = "",
+                footer = "",
+            } = c;
+
+            Swal.fire({
+                icon: 'error',
+                title: title,
+                text: msg,
+                footer: footer,
+            })
+
+        }
+
+        async function custom(c) {
+            const {
+                msg = "",
+                title = "",
+            } = c;
+
+            const {value: formValues} = await Swal.fire({
+                title: title,
+                html: msg,
+                backdrop: false,
+                focusConfirm: false,
+                showCancelButton: true,
+                willOpen: () => {
+                    const elem = document.getElementById('reservation-dates-modal');
+                    const rp = new DateRangePicker(elem, {
+                        format: 'yyyy-mm-dd',
+                        showOnFocus: true,
+                    })
+                },
+                preConfirm: () => {
+                    return [
+                        document.getElementById('start').value,
+                        document.getElementById('end').value
+                    ]
+                },
+                didOpen: () => {
+                    document.getElementById('start').removeAttribute('disabled');
+                    document.getElementById('end').removeAttribute('disabled');
+                }
+            })
+
+            if (formValues) {
+                Swal.fire(JSON.stringify(formValues))
+            }
+
+        }
+
+        return {
+            toast: toast,
+            success: success,
+            error: error,
+            custom: custom,
+        }
     }
 </script>
 <script src="https://unpkg.com/notie"></script>
