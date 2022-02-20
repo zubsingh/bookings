@@ -97,14 +97,14 @@
 
     </div>
 
-    <div class="row">
-        <div class="col">
-            <p id="myparagraph">This is some text</p>
-            <p>
-                <button id="colorButton" class="btn btn-outline-secondary">Click Me</button>
-            </p>
-        </div>
-    </div>
+<!--    <div class="row">-->
+<!--        <div class="col">-->
+<!--            <p id="myparagraph">This is some text</p>-->
+<!--            <p>-->
+<!--                <button id="colorButton" class="btn btn-outline-secondary">Click Me</button>-->
+<!--            </p>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>
 
 <div class="row my-footer">
@@ -149,10 +149,10 @@
             })
     })();
 
-    const elem = document.getElementById('reservation-dates');
-    const rangepicker = new DateRangePicker(elem, {
-        format: "yyyy-mm-dd",
-    });
+    // const elem = document.getElementById('reservation-dates');
+    // const rangepicker = new DateRangePicker(elem, {
+    //     format: "yyyy-mm-dd",
+    // });
 
     document.getElementById("colorButton").addEventListener("click", function () {
         let html = `
@@ -279,6 +279,7 @@
                     const rp = new DateRangePicker(elem, {
                         format: 'yyyy-mm-dd',
                         showOnFocus: true,
+                        buttonClass: 'btn',
                     })
                 },
                 preConfirm: () => {

@@ -18,6 +18,9 @@
 /*    color: red;*/
 /*}*/
 
-.datepicker {
+.datepicker-picker {
     z-index: 200000;
+}
+.swal2-actions{
+    z-index: 0 !important;
 }

@@ -1,26 +1,296 @@
 {{define "base"}}
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-    <title>Store</title>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>My nice Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    {{block "css" .}}
-    {{end}}
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs5.min.css">
+    <!--    <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
 </head>
 
 <body>
-    {{block "content" .}}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar scroll</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Rooms
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                        <li><a class="dropdown-item" href="/generals-quarters">General's Quarters</a></li>
+                        <li><a class="dropdown-item" href="/majors-suite">Major's suite</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/search-availability">Book Now</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact Us</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+{{block "content" .}}
 
-    {{end}}
+{{end}}
 
-    {{block "js" .}}
 
-    {{end}}
+<div class="row my-footer">
+    <div class="col">
+        Left
+    </div>
+    <div class="col">
+        Middle
+    </div>
+    <div class="col">
+        Right
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+
+{{block "js" .}}
+
+{{end}}
+
+<script>
+    let attention = Prompt();
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        let forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })();
+
+    // const elem = document.getElementById('reservation-dates');
+    // const rangepicker = new DateRangePicker(elem, {
+    //     format: "yyyy-mm-dd",
+    // });
+
+    //     document.getElementById("colorButton").addEventListener("click", function () {
+    //         let html = `
+    //         <form id="check-availability-form action="" method="post" novalidate class="needs-validation>
+    //             <div class="from-row">
+    //             <div class="col">
+    //             <div class="form-row" id="reservation-dates-modal">
+    //             <div class = "col">
+    //             <input disabled required class="form-control" type="text" name="start" id="start" placeholder="Arrival">
+    // </div>
+    //             <div class="col">
+    //             <input disabled required class="form-control" type="text" name="end" id="end" placeholder="Departure">
+    // </div>
+    // </div>
+    // </div>
+    // </div>
+    //          `
+    //
+    //         // let myel = document.getElementById("myparagraph");
+    //         // if (myel.classList.contains("redText")) {
+    //         //     myel.classList.remove("redText");
+    //         // } else {
+    //         //     myel.classList.add("redText");
+    //         // }
+    //         //notify("This is my message", "success");
+    //         //notifyModel('title', "Hello World", 'success', "My text for the button");
+    //         //attention.toast({msg: "Hello World", icon: "error"});
+    //         //attention.success({msg: "Hello World"});
+    //         attention.custom({msg: html, title: "Choose your Dates"});
+    //     });
+
+    function notify(msg, msgType) {
+        notie.alert({
+            type: msgType,
+            text: msg,
+        })
+    }
+
+    function notifyModel(title, text, icon, confirmButtom) {
+        Swal.fire({
+            title: title,
+            html: text,
+            icon: icon,
+            confirmButtonText: confirmButtom
+        })
+    }
+
+    function Prompt() {
+        let toast = function (c) {
+            const {
+                msg = "",
+                icon = "success",
+                position = "top-end",
+            } = c;
+
+            //console.log("click buttion and got roast");
+            const Toast = Swal.mixin({
+                toast: true,
+                title: msg,
+                position: position,
+                icon: icon,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                // icon: 'success',
+                // title: 'Signed in successfully'
+            })
+        }
+        let success = function (c) {
+            //console.log("clicked button and got sucess");
+            const {
+                msg = "",
+                title = "",
+                footer = "",
+            } = c;
+
+            Swal.fire({
+                icon: 'success',
+                title: title,
+                text: msg,
+                footer: footer,
+            })
+
+        }
+
+        let error = function (c) {
+            //console.log("clicked button and got sucess");
+            const {
+                msg = "",
+                title = "",
+                footer = "",
+            } = c;
+
+            Swal.fire({
+                icon: 'error',
+                title: title,
+                text: msg,
+                footer: footer,
+            })
+
+        }
+
+        async function custom(c) {
+            const {
+                msg = "",
+                title = "",
+            } = c;
+
+            const {value: result} = await Swal.fire({
+                title: title,
+                html: msg,
+                backdrop: false,
+                focusConfirm: false,
+                showCancelButton: true,
+                willOpen: () => {
+                    // const elem = document.getElementById('reservation-dates-modal');
+                    // const rp = new DateRangePicker(elem, {
+                    //     format: 'yyyy-mm-dd',
+                    //     showOnFocus: true,
+                    //     buttonClass: 'btn',
+                    // })
+                    if (c.willOpen !== undefined) {
+                        c.willOpen();
+                    }
+                },
+                didOpen: () => {
+                    // document.getElementById('start').removeAttribute('disabled');
+                    // document.getElementById('end').removeAttribute('disabled');
+                    if (c.didOpen !== undefined) {
+                        c.didOpen();
+                    }
+                },
+                preConfirm: () => {
+                    return [
+                        document.getElementById('start').value,
+                        document.getElementById('end').value
+                    ]
+                },
+            })
+
+            // if (formValues) {
+            //     Swal.fire(JSON.stringify(formValues))
+            // }
+            if (result) {
+                if (result.dismiss !== Swal.DismissReason.cancel) {
+                    if (result.value !== "") {
+                        if (c.callback !== undefined) {
+                            c.callback(result);
+                        }
+                    } else {
+                        c.callback(false);
+                        // swalWithBootstrapButtons.fire(
+                        //     'Cancelled',
+                        //     'Your imaginary file is safe :)',
+                        //     'error'
+                        // )
+                    }
+
+                } else {
+                    c.callback(false);
+                }
+            }
+
+        }
+
+        return {
+            toast: toast,
+            success: success,
+            error: error,
+            custom: custom,
+        }
+    }
+</script>
+<script src="https://unpkg.com/notie"></script>
 </body>
 
-</html>
 {{end}}
