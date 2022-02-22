@@ -60,12 +60,12 @@ func RenderTemplate(rw http.ResponseWriter, r *http.Request, tmpl string, td *mo
 
 func CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
-
+	//fmt.Println("Hello")
 	pages, err := filepath.Glob("./templates/*.page.html")
 	if err != nil {
 		return myCache, err
 	}
-
+	//fmt.Println("Hello")
 	for _, page := range pages {
 		name := filepath.Base(page)
 		//fmt.Println("Page is currently ", page)
