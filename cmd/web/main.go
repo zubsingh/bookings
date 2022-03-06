@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/alexedwards/scs/v2"
 	"github.com/zubsingh/bookings/internal/config"
+	"github.com/zubsingh/bookings/internal/driver"
 	"github.com/zubsingh/bookings/internal/handlers"
 	"github.com/zubsingh/bookings/internal/models"
 	"github.com/zubsingh/bookings/internal/render"
@@ -22,6 +23,9 @@ var session *scs.SessionManager
 func main() {
 	// what i am going to put in session
 	gob.Register(models.Reservation{})
+	gob.Register(models.User{})
+	gob.Register(models.Room{})
+	gob.Register(models.Restriction{})
 
 	// change this to true when in production
 	app.InProduction = false
@@ -34,6 +38,13 @@ func main() {
 
 	app.Session = session
 
+	// Connect to database
+	db, err := driver.ConnectSQL("host=localhost port=5431 dbname=bookings user=zubinsingh password=")
+	if err != nil {
+		log.Fatal("Cannot connect to database! Dying...")
+	}
+	defer db.SQL.Close()
+
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("cannot create template cache")
@@ -41,10 +52,10 @@ func main() {
 	app.TemplateCache = tc
 	app.UseCache = false
 
-	repo := handlers.NewRepo(&app)
+	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
 
-	render.SetConfig(&app)
+	render.NewRenderer(&app)
 
 	// http.HandleFunc("/", handlers.Repo.Home)
 	// http.HandleFunc("/about", handlers.Repo.About)

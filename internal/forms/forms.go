@@ -46,7 +46,7 @@ func (f *Form) Required(fields ...string) bool {
 	return true
 }
 
-func (f *Form) EmailLength(field string) bool {
+func (f *Form) IsEmail(field string) bool {
 	_, err := mail.ParseAddress(f.Get(field))
 	if err != nil {
 		f.Errors.Add(field, "Please add valid email address")
