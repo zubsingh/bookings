@@ -154,9 +154,14 @@ func (m *Repository) PostReservation(rw http.ResponseWriter, r *http.Request) {
 	//2021-01-01 -- 01/02 03:04:05PM '06-0700
 	layout := "2006-01-02"
 	startDate, err := time.Parse(layout, sd)
+	if err != nil {
+		fmt.Println("Parsing Error startDate")
+		return
+	}
+
 	endDate, err := time.Parse(layout, ed)
 	if err != nil {
-		fmt.Println(" Parsing Error")
+		fmt.Println(" Parsing Error endDate")
 		//helpers.ServerError(rw, err)
 		return
 	}
@@ -242,7 +247,43 @@ func (m *Repository) Availability(rw http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostAvailability(rw http.ResponseWriter, r *http.Request) {
 	start := r.Form.Get("start_date")
 	end := r.Form.Get("end_date")
-	rw.Write([]byte(fmt.Sprintf("Posted to search %s %s", start, end)))
+
+	layout := "2006-01-02"
+	startDate, err := time.Parse(layout, start)
+	if err != nil {
+		fmt.Println("Parsing Error startDate")
+		return
+	}
+
+	endDate, err := time.Parse(layout, end)
+	if err != nil {
+		fmt.Println(" Parsing Error endDate")
+		//helpers.ServerError(rw, err)
+		return
+	}
+
+	rooms, err := m.DB.SearchAvailabilityForAllRooms(startDate, endDate)
+	if err != nil {
+		fmt.Println(" Parsing Error SearchAvailabilityForAllRooms")
+		return
+	}
+
+	for _, i := range rooms {
+		fmt.Println(" printing log ", i.ID, i.RoomName)
+	}
+	if len(rooms) == 0 {
+		// no availability
+		m.App.Session.Put(r.Context(), "error", "No Availability")
+		http.Redirect(rw, r, "/search-availability", http.StatusSeeOther)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["rooms"] = rooms
+
+	render.Template(rw, r, "choose-room.page.html", &models.TemplateData{
+		Data: data,
+	})
 
 }
 
