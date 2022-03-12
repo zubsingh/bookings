@@ -261,7 +261,6 @@ func (m *Repository) AvailabilityJson(rw http.ResponseWriter, r *http.Request) {
 
 // Contact renders page
 func (m *Repository) Contact(rw http.ResponseWriter, r *http.Request) {
-	//render.RenderTemplate(rw, "home.html")
 	render.Template(rw, r, "contact.page.html", &models.TemplateData{})
 }
 
@@ -273,8 +272,16 @@ func (m *Repository) ReservationSummary(rw http.ResponseWriter, r *http.Request)
 	data := make(map[string]interface{})
 	data["reservation"] = reservation
 
+	sd := reservation.StartDate.Format("2006-01-02")
+	ed := reservation.EndDate.Format("2006-01-02")
+
+	stringMap := make(map[string]string)
+	stringMap["start_date"] = sd
+	stringMap["end_date"] = ed
+
 	render.Template(rw, r, "reservation-summary.page.html", &models.TemplateData{
-		Data: data,
+		Data:      data,
+		StringMap: stringMap,
 	})
 }
 
